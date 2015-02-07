@@ -41,16 +41,23 @@ foreach ($data_array as $data_item) {
 
 $title_all_array = explode(" ", $title_all_string);
 
-
+$common_words = array('and', 'if', 'in', 'of', 'an', 'my', 'to', 'for', '0');
 
 $title_count_array = array();
 foreach ($title_all_array as $title_all_item) {
-    if ( array_key_exists( $title_all_item, $title_count_array )  ) {
-        $title_count_array[$title_all_item]++;
-        
-    } else {
-        $title_count_array[$title_all_item] = 1;
+    if ( in_array( $title_all_item, $common_words) ) {
+        # ignore this one, it's common
     
+    } else {
+        if ( array_key_exists( $title_all_item, $title_count_array )  ) {
+            # counted this before, increment it
+            $title_count_array[$title_all_item]++;
+            
+        } else {
+            # not counted this before
+            $title_count_array[$title_all_item] = 1;
+        
+        }
     }
 }
 
@@ -58,7 +65,8 @@ arsort($title_count_array);
 
 #echo "<pre>" . print_r( $title_count_array, TRUE ) . "</pre>";
 
-$title_count_array_trim = array_slice($title_count_array, 0, 10);
+# trim it down
+$title_count_array_trim = array_slice($title_count_array, 0, 20);
 
 ?>
 
@@ -102,10 +110,7 @@ $title_count_array_trim = array_slice($title_count_array, 0, 10);
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
-        
-        
-        
-          <h2 class="sub-header">Word Counts</h2>
+          <h3 class="sub-header">Most Popular Words</h3>
           <div class="table-responsive">
             <table class="table table-striped">
               <thead>
@@ -128,25 +133,6 @@ $title_count_array_trim = array_slice($title_count_array, 0, 10);
               </tbody>
             </table>
           </div>              
-              
-          <ul class="nav nav-sidebar">
-            <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
-            <li><a href="#">Reports</a></li>
-            <li><a href="#">Analytics</a></li>
-            <li><a href="#">Export</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item</a></li>
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-            <li><a href="">More navigation</a></li>
-          </ul>
-          <ul class="nav nav-sidebar">
-            <li><a href="">Nav item again</a></li>
-            <li><a href="">One more nav</a></li>
-            <li><a href="">Another nav item</a></li>
-          </ul>
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
