@@ -18,7 +18,7 @@
 <?php
 
 /*
-\http://tinfoil.bodaegl.com/
+http://tinfoil.bodaegl.com/api/all
 */
 
 $json_data = file_get_contents ( "http://tinfoil.bodaegl.com/api/all" );
@@ -30,21 +30,35 @@ $data_array = json_decode( $json_data );
 $data_array = $data_array->requests;
 
 $dump = print_r( $data_array, TRUE );
-/*
-
-    [requests] => Array
-        (
-            [0] => stdClass Object
-                (
-                    [body] => 1
-                    [body_req_id] => FOI-14-0206
-                    [id] => 1
-                    [title] => Scottish Country Dancing
-                    [type] => FOI
-                )
 
 
-*/
+
+$title_all_string = "";
+
+foreach ($data_array as $data_item) {
+    $title_all_string .= $data_item->title . " ";
+}
+
+$title_all_array = explode(" ", $title_all_string);
+
+
+
+$title_count_array = array();
+foreach ($title_all_array as $title_all_item) {
+    if ( array_key_exists( $title_all_item, $title_count_array )  ) {
+        $title_count_array[$title_all_item]++;
+        
+    } else {
+        $title_count_array[$title_all_item] = 1;
+    
+    }
+}
+
+arsort($title_count_array);
+
+#echo "<pre>" . print_r( $title_count_array, TRUE ) . "</pre>";
+
+$title_count_array_trim = array_slice($title_count_array, 0, 10);
 
 ?>
 
@@ -88,6 +102,33 @@ $dump = print_r( $data_array, TRUE );
     <div class="container-fluid">
       <div class="row">
         <div class="col-sm-3 col-md-2 sidebar">
+        
+        
+        
+          <h2 class="sub-header">Word Counts</h2>
+          <div class="table-responsive">
+            <table class="table table-striped">
+              <thead>
+                <tr>
+                  <th>Word</th>
+                  <th>Count</th>
+                </tr>
+              </thead>
+              <tbody>        
+              <?php
+              foreach ($title_count_array_trim as $title_text => $title_count) {
+                ?>
+                <tr>
+                  <td><?php echo $title_text; ?></td>
+                  <td><?php echo $title_count ?></td>  
+                </tr>                         
+                <?php
+              }
+              ?>
+              </tbody>
+            </table>
+          </div>              
+              
           <ul class="nav nav-sidebar">
             <li class="active"><a href="#">Overview <span class="sr-only">(current)</span></a></li>
             <li><a href="#">Reports</a></li>
@@ -110,31 +151,6 @@ $dump = print_r( $data_array, TRUE );
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
           
-          
-          <?php
-          #echo $dump;
-          
-          
-          
-/*
-
-    [requests] => Array
-        (
-            [0] => stdClass Object
-                (
-                    [body] => 1
-                    [body_req_id] => FOI-14-0206
-                    [id] => 1
-                    [title] => Scottish Country Dancing
-                    [type] => FOI
-                )
-
-
-*/          
-          
-          
-          ?>
-
           <h2 class="sub-header">Section title</h2>
           <div class="table-responsive">
             <table class="table table-striped">
