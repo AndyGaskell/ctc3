@@ -15,6 +15,56 @@
     <link href="css/tinfoil.css" rel="stylesheet">
 
 
+<?php
+
+/*
+\http://tinfoil.bodaegl.com/
+*/
+
+$json_data = file_get_contents ( "http://tinfoil.bodaegl.com/" );
+
+
+
+$json_start = strpos($json_data, '<pre>');
+
+$json_end = strpos($json_data, '</pre>');
+
+
+$json_data = substr ( $json_data, $json_start + 5, $json_end - $json_start );
+
+#$json_data = json_decode( $json_data );
+
+echo "json_data: " . $json_data. "<br/>\n";
+
+$json_array = explode( "\n", $json_data );
+
+
+echo "json_array: " . print_r($json_array, TRUE) . "<br/>\n";
+
+$data_array = array();
+
+foreach ($json_array as $json_item) {
+    echo "json_item: " . $json_item . "<br/>\n";
+    #$json_item = str_replace(''', "/"", $json_item);
+    
+    #$data_array[] = json_decode( $json_item );
+    
+    $data_element_array = array();
+    
+    $data_element_raw_array = explode( "\n", $json_item );
+    
+    
+    
+    #echo "Value: $value<br />\n";
+}
+
+
+$dump = print_r( $data_array, TRUE );
+
+
+?>
+
+
 
 
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
@@ -75,6 +125,11 @@
         </div>
         <div class="col-sm-9 col-sm-offset-3 col-md-10 col-md-offset-2 main">
           <h1 class="page-header">Dashboard</h1>
+          
+          
+          <?php
+          echo $dump;
+          ?>
 
           <h2 class="sub-header">Section title</h2>
           <div class="table-responsive">
