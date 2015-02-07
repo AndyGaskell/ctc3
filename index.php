@@ -21,42 +21,12 @@
 \http://tinfoil.bodaegl.com/
 */
 
-$json_data = file_get_contents ( "http://tinfoil.bodaegl.com/" );
+$json_data = file_get_contents ( "http://tinfoil.bodaegl.com/api/all" );
 
 
 
-$json_start = strpos($json_data, '<pre>');
-
-$json_end = strpos($json_data, '</pre>');
-
-
-$json_data = substr ( $json_data, $json_start + 5, $json_end - $json_start );
-
-#$json_data = json_decode( $json_data );
-
-echo "json_data: " . $json_data. "<br/>\n";
-
-$json_array = explode( "\n", $json_data );
-
-
-echo "json_array: " . print_r($json_array, TRUE) . "<br/>\n";
-
-$data_array = array();
-
-foreach ($json_array as $json_item) {
-    echo "json_item: " . $json_item . "<br/>\n";
-    #$json_item = str_replace(''', "/"", $json_item);
+$data_array = json_decode( $json_data );
     
-    #$data_array[] = json_decode( $json_item );
-    
-    $data_element_array = array();
-    
-    $data_element_raw_array = explode( "\n", $json_item );
-    
-    
-    
-    #echo "Value: $value<br />\n";
-}
 
 
 $dump = print_r( $data_array, TRUE );
