@@ -1,35 +1,21 @@
-<!DOCTYPE html>
-<html lang="en">
-  <head>
-    <meta charset="utf-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <meta name="description" content="">
-    <meta name="author" content="">
-    <link rel="icon" href="favicon.ico">
-
-    <title>Dashboard Template for Bootstrap</title>
-
-    <!-- Bootstrap core CSS -->
-    <link href="css/bootstrap.min.css" rel="stylesheet">
-    <link href="css/tinfoil.css" rel="stylesheet">
-
-
 <?php
+
+$app_title = "TinFOIlhat - Freedom of Information Search Engine";
 
 /*
 http://tinfoil.bodaegl.com/api/all
 */
 
+# get the json
 $json_data = file_get_contents ( "http://tinfoil.bodaegl.com/api/all" );
 
-
-
+# decode it
 $data_array = json_decode( $json_data );
-    
+
+# pull out the child that has the data in it    
 $data_array = $data_array->requests;
 
-$dump = print_r( $data_array, TRUE );
+#$dump = print_r( $data_array, TRUE );
 
 
 
@@ -69,10 +55,21 @@ arsort($title_count_array);
 $title_count_array_trim = array_slice($title_count_array, 0, 20);
 
 ?>
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+    <link rel="icon" href="favicon.ico">
 
+    <title><?php echo $app_title?></title>
 
-
-
+    <!-- Bootstrap core CSS -->
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/tinfoil.css" rel="stylesheet">
     <!-- HTML5 shim and Respond.js for IE8 support of HTML5 elements and media queries -->
     <!--[if lt IE 9]>
       <script src="https://oss.maxcdn.com/html5shiv/3.7.2/html5shiv.min.js"></script>
@@ -82,7 +79,7 @@ $title_count_array_trim = array_slice($title_count_array, 0, 20);
 
   <body>
 
-    <nav class="navbar navbar-inverse navbar-fixed-top">
+    <nav class="navbar navbar-fixed-top">
       <div class="container-fluid">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -91,7 +88,7 @@ $title_count_array_trim = array_slice($title_count_array, 0, 20);
             <span class="icon-bar"></span>
             <span class="icon-bar"></span>
           </button>
-          <a class="navbar-brand" href="#">Tinfoil Hat</a>
+          <a class="navbar-brand" href="#"><?php echo $app_title?></a>
         </div>
         <div id="navbar" class="navbar-collapse collapse">
           <ul class="nav navbar-nav navbar-right">

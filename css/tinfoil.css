@@ -25,6 +25,18 @@ body {
   border: 0;
 }
 
+.navbar{
+    background-color: #ff5621;
+}
+
+.navbar-brand,
+h1,
+h2,
+h3,
+h4 {
+    color: #0c46a0;
+}
+
 /*
  * Sidebar
  */
